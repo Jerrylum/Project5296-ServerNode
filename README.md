@@ -30,3 +30,14 @@ curl -H "Connection: keep-alive" -H "Keep-Alive: timeout=5, max=100" -i http://1
 
 nc 16.163.217.155 80
 ```
+
+# Download cat image
+```bash
+curl http://127.0.0.1/download/200.jpg > output.jpg
+
+curl -r 0-20000 http://127.0.0.1/download/200.jpg > part1
+curl -r 20000 http://127.0.0.1/download/200.jpg > part2
+
+cat part1 part2 > output.jpg
+
+```
