@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 )
 
 func writeFileWithAs(filename string, numOfAs int) error {
@@ -14,15 +15,6 @@ func writeFileWithAs(filename string, numOfAs int) error {
 		return err
 	}
 	filePath := filepath.Join(currentDir, "public", "download", filename)
-
-	// Create the file content
-	// content := make([]byte, numOfAs)
-	// for i := range content {
-	// 	content[i] = 'a'
-	// }
-
-	// Write the file
-	// return os.WriteFile(filePath, content, 0644)
 
 	fd, err := os.Create(filePath)
 	if err != nil {
@@ -38,16 +30,18 @@ func writeFileWithAs(filename string, numOfAs int) error {
 
 func main() {
 	// Define and parse the command-line argument
-	sizeMB := flag.Int("m", 0, "Generated Size in MB")
+	sizeMB := flag.Float64("m", 0, "Generated Size in MB")
 	flag.Parse()
 
-	if *sizeMB == 0 {
+	if *sizeMB <= 0 {
 		fmt.Println("Please specify the size in MB")
 		return
 	}
 
 	// Call the function to write the file
-	err := writeFileWithAs(fmt.Sprintf("%d.out", *sizeMB), *sizeMB*1000*1000)
+	finalFileName := float64(int(*sizeMB*1000000)) / float64(1000000)
+	finalSizeMB := int(*sizeMB * 1000 * 1000)
+	err := writeFileWithAs(fmt.Sprintf("%s.out", strconv.FormatFloat(finalFileName, 'f', -1, 64)), finalSizeMB)
 	if err != nil {
 		fmt.Printf("Error writing file: %v\n", err)
 	}
