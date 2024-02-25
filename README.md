@@ -22,3 +22,13 @@ You can retrieve the unmodified config files from the container using the follow
 sudo docker run --rm --entrypoint=cat nginx /etc/nginx/nginx.conf > nginx.conf
 sudo docker run --rm --entrypoint=cat nginx /etc/nginx/conf.d/default.conf > default.conf
 ```
+
+# Generate Blob Files
+
+This repository contains a script to generate blob files. It can be used to generate any size of file for testing purposes. The script is located at `./generate.go`. You can use the following command to generate blob files in any size:
+
+```bash
+go run generate.go -m=100
+```
+
+This script is written in Go, so you need to have Go installed on your machine to run this script. This will generate a file named `100.out` with 100MB of data located at the ./public/download directory. The file name is the size of the file in MB.
